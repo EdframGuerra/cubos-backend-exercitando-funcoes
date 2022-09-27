@@ -1,9 +1,4 @@
-// implemente a função corrigirProva de modo que, ao receber um 
-// objeto como este como parâmetro, o resultado seja o seguinte.
-
-// O aluno(a) João acertou 3 questões e obteve nota 6
 let contador = 0;
-
 
 const prova = {
     aluno: "João",
@@ -42,6 +37,4 @@ function corrigirProva(prova) {
     let nota = contador * 2;
     console.log(`O(A) ${prova.aluno} acertou ${contador} questões e obteve nota ${nota}`)
 }
-corrigirProva(prova)
-
-
+corrigirProva(prova);
