@@ -1,4 +1,3 @@
-// b) Sabendo que o parâmetro carrinho será sempre um objeto com o seguinte formato:
 const carrinho = {
     nomeDoCliente: "Guido Bernal",
     produtos: [
@@ -14,47 +13,119 @@ const carrinho = {
             qtd: 2,
             precoUnit: 5000
         }
-    ]
-}
+    ],
+    imprimirResumo: function () {
+        this.nomeDoCliente;
+        contador = 0;
+        valorTotal = 0;
 
+        for (let item of this.produtos) {
+            if (item.qtd > 0) {
+                contador += item.qtd
+                this.calcularTotalAPagar();
+            }
 
-// a) Declare uma função de nome imprimirResumoDoCarrinho que tenha apenas um parâmetro chamado carrinho.
-
-function imprimiResumoDoCarrinho(parrinho) {
-    // Implemente a função imprimirResumoDoCarrinho de modo que, ao receber um objeto como este como 
-    // parâmetro, o resultado seja o seguinte.
-    // Cliente: Guido Bernal
-    carrinho.nomeDoCliente;
-    contador = 0;
-    valorTotal = 0;
-    for (let item of carrinho.produtos) {
-        if (item.qtd > 0) {
-            contador += item.qtd
-            valorTotal = valorTotal + (item.qtd * item.precoUnit)
+        }
+        console.log(`Cliente: ${this.nomeDoCliente} \n Total de itens: ${contador} itens \n Total a pagar: ${(valorTotal / 100).toFixed(2)}`);
+    },
+    addProduto: function (produto) {
+        let existe = false
+        let { produtos } = carrinho;
+        for (const item of produtos) {
+            if (item.id == produto.id) {
+                item.qtd += produto.qtd;
+                existe = true;
+            }
         }
 
+        if (!existe) {
+            this.produtos.push(produto);
+        }
 
+    },
+    imprimirDetalhes: function () {
+        let { nomeDoCliente, produtos } = this;
+        console.log(`Cliente: ${nomeDoCliente}`);
+
+        let valorTotal = 0;
+        let contadorDeItens = 1;
+
+        for (const produto of produtos) {
+            let { nome, precoUnit, qtd } = produto;
+            if (produto > 0) {
+
+                console.log(`Item ${contadorDeItens} - ${nome} - ${qtd} und - R$ ${(precoUnit * qtd) / 100}`)
+                contadorDeItens++;
+                this.calcularTotalAPagar();
+            }
+        }
+
+        console.log(`Total de itens: ${this.calcularTotalDeItens()}`);
+        console.log(`Total a pagar: ${(this.calcularTotalDeItens() / 100).toFixed(2)}`);
+    },
+    calcularTotalDeItens: function () {
+        let totalDeItens = 0;
+        for (const produto of carrinho.produtos) {
+            if (produto > 0) {
+                totalDeItens += item.qtd;
+            }
+        }
+        return totalDeItens;
+
+    },
+    calcularTotalAPagar: function () {
+        valorTotal = 0;
+        for (const produto of produtos) {
+            if (produto > 0) {
+                valorTotal += produto.qtd * produto.precoUnit;
+            }
+        }
+    },
+    calcularDesconto: function () {
+        let { produtos } = carrinho;
+        let totalAPagar = this.calcularTotalAPagar() / 100;
+        let totalDeItens = this.calcularTotalDeItens();
+
+        let descontoTotalPorItens = 0;
+        let descontoTotalPorValor = 0;
+
+        if (totalDeItens > 4) {
+            descontoTotalPorItens = produtos[0].precoUnit / 100;
+            for (const produto of produtos) {
+                if (produto.precoUnit < descontoTotalPorItens) {
+                    descontoTotalPorItens = produto.precoUnit / 100;
+                }
+            }
+        }
+
+        if (totalAPagar > 100) {
+            descontoTotalPorValor = totalAPagar * 0.1;
+        }
+
+        return descontoTotalPorItens > descontoTotalPorValor ? descontoTotalPorItens : descontoTotalPorValor;
     }
-    console.log(`${carrinho.nomeDoCliente} \n Total de Itens: ${contador} \n Total a pagar: ${valorTotal}`)
+
 }
 
-// Total de itens: 5 itens
 
-// Total a pagar: R$ 190,00
+const novaBermuda = {
+    id: 2,
+    nome: "Bermuda",
+    qtd: 3,
+    precoUnit: 5000
+}
 
-// Para testar sua implementação, chame a função imprimirResumoDoCarrinho passando o objeto carrinho
-// exemplificado acimam como argumento.
-// imprimiResumoDoCarrinho(carrinho);
+const novoTenis = {
+    id: 3,
+    nome: "Tenis",
+    qtd: 1,
+    precoUnit: 10000
+}
 
 
-// c) Modifique a questão anterior para que a função imprimirResumoDoCarrinhoseja um método do
-// objeto carrinho (sendo assim, cabe mudar o nome do método para apenas imprimirResumo) ao invés de
-// uma função isolada.
+carrinho.imprimirDetalhes();
+carrinho.addProduto(novaBermuda);
+carrinho.addProduto(novoTenis);
+// carrinho.imprimirResumo();
 
-// d) Declare uma nova função isolada chamada addProdutoAoCarrinho que tenha dois argumentos: carrinho
-//  e produto.
-
-// e) Implemente a função addProdutoAoCarrinho de modo que o produto passado com argumento seja adicionado ao array de produtos da compra.
-
-// b) Sabendo que o parâmetro carrinho será sempre um objeto com o seguinte formato:
-
+console.log(carrinho);
