@@ -126,6 +126,4 @@ const novoTenis = {
 carrinho.imprimirDetalhes();
 carrinho.addProduto(novaBermuda);
 carrinho.addProduto(novoTenis);
-// carrinho.imprimirResumo();
-
 console.log(carrinho);
